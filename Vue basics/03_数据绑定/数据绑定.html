@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>数据绑定</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+  </head>
+  <body>
+    <!-- 
+        Vue中有2种数据绑定的方式 
+            a 单向绑定v-bind数据只能从 data 流向页面 
+            b 双向绑定v-model数据不仅能从 data 流向页面，还可以从页面流向 data 
+        备注 
+            a 双向绑定一般都应用在表单类元素上，如 <input><select><textarea>等 
+            b v-model:value可以简写为v-model，因为v-model默认收集的就是value值
+     -->
+    
+    <div id="root">
+      <!-- 普通写法 -->
+      <!-- 单向数据绑定：<input type="text" v-bind:value="name"><br/> -->
+			<!-- 双向数据绑定：<input type="text" v-model:value="name"><br/> -->
+
+      <!-- 简写 -->
+      单向数据绑定：<input type="text" :value="name"><br/>
+      双向数据绑定：<input type="text" v-model="name"><br/>
+
+      <!-- 如下代码是错误的，因为 v-model 只能应用在表单类元素（输入类元素）上 -->
+      <!-- <h2 v-model:x="name">你好啊</h2> -->
+    </div>
+    
+      <script type="text/javascript">
+    Vue.config.productionTip = false // 阻止 vue 在启动时生成生产提示。
+
+    new Vue({
+      el: '#root',
+      data: {
+        name: 'cess'
+      }
+    })
+  </script>
+  </body>
+</html>
