@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+</head>
+
+<body>
+    <div id="app">
+        <div>选择的时间是： {{ value1 }}</div>
+        <el-date-picker v-model="value1" type="date" placeholder="选择日期">
+        </el-date-picker>
+    </div>
+    <script src="../../js/vue.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                value2: '2022-07-16'
+            },
+            computed:{
+                value1:{
+                    get(){
+                        return this.value2
+                    },
+                    set(val){
+                        this.value2 = new Date(val).getTime()
+                    }
+                }
+            },
+            watch: {
+            }
+        })
+    </script>
+</body>
+
+</html>

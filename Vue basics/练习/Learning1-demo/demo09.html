@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{fullName}}</h1>
+        <span>改变姓</span>
+        <input v-model="firstName" />
+        <span>改变名</span>
+        <input v-model="lastName" />
+    </div>
+    <script src="../../js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                firstName: 'hong',
+                lastName: 'kai',
+                fullName: 'hong-kai',
+            },
+            watch: {
+                lastName(val) {
+                    this.fullName = this.firstName + '-' + val
+                }
+            }
+        })
+        vm.$watch('firstName', {
+            handler(val) {
+                this.fullName = val + '-' + this.lastName
+            }
+        })
+    </script>
+</body>
+
+</html>

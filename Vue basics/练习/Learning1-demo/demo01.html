@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{person1.name}}</h1>
+        <h1>{{person2.name}}</h1>
+    </div>
+    <script src="../../js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                person1: {
+                    name: 'honkai',
+                    id: '001'
+                },
+                person2: Object.freeze({
+                    name: 'qujianglong',
+                    id: '002'
+                })
+            }
+        })
+        console.log(vm)
+    </script>
+</body>
+
+</html>
