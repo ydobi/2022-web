@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <App></App>
+    </div>
+    <script src="../../js/vue.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script>
+        // 子组件
+        const Children = Vue.extend({
+            data() {
+                return {
+
+                }
+            },
+            mounted() {
+                console.log('子组件开始执行mounted')
+            },
+            template: `<h1>子组件加载了</h1>`
+        })
+        // 父组件
+        const Parent = Vue.extend({
+            data() {
+                return {}
+            },
+            components: {
+                Children,
+            },
+            methods: {
+                listenChildrenMounted() {
+                    console.log('父组件监听到子组件mounted生命周期')
+                }
+            },
+            template: `
+                <Children @hook:mounted="listenChildrenMounted"></Children>
+            `
+        })
+
+        // App
+        const App = Vue.extend({
+            name: "App",
+            components: {
+                Parent,
+            },
+            template: `<div>
+                    <Parent></Parent>
+                </div>`
+        })
+
+        const vm = new Vue({
+            el: '#app',
+            components: {
+                App
+            },
+            data: {
+                n: 1
+            },
+            methods: {},
+            watch: {}
+        })
+    </script>
+    <style>
+    </style>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <App></App>
+    </div>
+    <script src="../../js/vue.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script>
+        // 子组件
+        const Children = Vue.extend({
+            data() {
+                return {
+                    subTitle: ''
+                }
+            },
+            props: {
+                title: {
+                    type: String
+                }
+            },
+            mounted() {
+            },
+            methods:{
+                titleChange($event){
+                    const newTitle = $event.target.value 
+                    this.$emit('update:title', newTitle)
+                    console.log($event.target.value)
+                } 
+            },
+            template: `
+                <div>
+                    <div>子组件标题{{title}}</div>
+                    <input type="text" v-model="subTitle" @change="titleChange"/>
+                </div>
+            `
+        })
+        // 父组件
+        const Parent = Vue.extend({
+            data() {
+                return {
+                    title: ''
+                }
+            },
+            components: {
+                Children,
+            },
+            methods: {
+                listenChildrenMounted() {
+                    console.log('父组件监听到子组件mounted生命周期')
+                }
+            },
+            template: `<div>
+                <span>父组件标题{{ title }}</span>
+                </br>
+                <Children  v-bind:title="title" v-on:update:title="title = $event"></Children>
+                <Children  v-bind:title.sync="title"></Children>
+                </div>
+            `
+        })
+
+        // App
+        const App = Vue.extend({
+            name: "App",
+            components: {
+                Parent,
+            },
+            template: `<Parent></Parent>`
+        })
+
+        const vm = new Vue({
+            el: '#app',
+            components: {
+                App
+            },
+            data: {
+                n: 1
+            },
+            methods: {},
+            watch: {}
+        })
+    </script>
+    <style>
+    </style>
+</body>
+
+</html>

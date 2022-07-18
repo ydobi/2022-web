@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="demo" v-clickoutside="eventPrint">div1</div>
+    </div>
+    <script src="../../js/vue.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script>
+        // 全局指令
+        Vue.directive('clickoutside', {
+            bind: function (el, binding) {
+                function eventHandler(e) {
+                    if (el.contains(e.target)) return
+                    if (binding.value && typeof binding.value === 'function') {
+                        binding.value(e)
+                    }
+                }
+                document.addEventListener('click', eventHandler)
+            }
+        })
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                n: 1
+            },
+            // 局部指令
+            // directives: {
+            //     clickoutside: {
+            //         bind(el, binding) {
+            //             function eventHandler(e) {
+            //                 if (el.contains(e.target)) return
+            //                 if (binding.value && typeof binding.value === 'function') {
+            //                     binding.value(e)
+            //                 }
+            //             }
+            //             document.addEventListener('click', eventHandler)
+            //         },
+            //         inserted(el, binding) {
+            //             console.log('123123')
+            //         },
+            //         updated(el, bingding) {
+            //             console.log('123')
+            //         }
+            //     }
+            // },
+            methods: {
+                change(a, b) {
+                    console.log(a, b)
+                },
+                eventPrint() {
+                    console.log('clickoutside事件触发了')
+                }
+            },
+            watch: {}
+        })
+    </script>
+    <style>
+        .demo {
+            width: 200px;
+            height: 200px;
+            background-color: aqua;
+        }
+    </style>
+</body>
+
+</html>

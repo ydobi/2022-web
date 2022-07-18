@@ -75,6 +75,30 @@ Object.defineProperty(person, 'age', {
 
 })
 ```
+
+## 4、下面代码在vue3、vue2中的差异如何？为什么？如果是数组呢？如何解决？(代码)
+> [Demo04](Learning1-demo/demo04.html)
+- Vue2 
+  - 对象： `Object.defineProperty` get和set
+  - 数组： 重写了 `push()` `pop()` `unshift()` `shift()` `splice()` `sort()` `reverse()`这几个方法
+- Vue3 Proxy（代理） 和 Reflect（反射）
+  ```javaScript
+    new Proxy(data,{
+      // 拦截读取属性值
+      get(target,prop){
+        return Reflect.set(target,prop)
+      },
+      // 拦截设置或添加属性值
+      set(target,prop,value){
+        return Reflect.set(target,prop,value)
+      },
+      // 拦截删除属性值
+      deleteProperty(target,prop){
+        return Reflect.deleteProperty(target,prop)
+      },
+    })
+  ```
+
 ## 5、动态绑定不同的事件（代码）
 > [Demo5](Learning1-demo/demo05.html)
 
@@ -90,6 +114,7 @@ Object.defineProperty(person, 'age', {
   - `getter` 触发时机：（1）初次读取 （2）当依赖的数据发生改变
 
 ## 8、用computed完成双向绑定（代码）
+> [Demo8](Learning1-demo/demo08.html)
 
 
 ## 9、$watch和watch的区别？（代码）
@@ -100,6 +125,12 @@ Object.defineProperty(person, 'age', {
 ## 10、补充删除方法（代码）
 > [Demo10](https://codesandbox.io/s/veevalidate-components-element-ui-veevalidate-3-0-forked-i7p6xb?file=/src/App.vue)
 
+## 11、如何在父组件中监听到子组件的生命周期？（代码）
+> [Demo11](Learning1-demo/demo11.html)
+
+## 12、使用异步组件、动态组件写一个列表（代码）
+> [Demo12](https://codesandbox.io/s/veevalidate-components-element-ui-veevalidate-3-0-forked-i7p6xb?file=/src/views/Demo14.vue)
+
 ## 13、如何给事件增加自定义参数（代码）
 > [Demo13](Learning1-demo/demo13.html)
 - 在DOM事件的回调函数中传入参数`$event`，可以获取到该事件的事件对象
@@ -108,9 +139,39 @@ Object.defineProperty(person, 'age', {
 ## 14、自定义组件的v-model（代码）
 > [Demo14](Learning1-demo/demo14.html)
 
+## 15、写一个组件使用.sync的示例，并口述他和v-model使用场景上的区别？（代码）
+> [Demo15](Learning1-demo/demo15.html)
+- `v-model` = `:value` 和 `@input`, 一个组件只能有一个，通常用于表单类组件，作单一值的修改
+- `v-bind.sync`, 可以有多个
+
+## 16、 包装一个mtd-select组件，并能够在爷爷组件中使用mtd-select所有的方法和props（代码）
+> [Demo16](Learning1-demo/demo16.html)
+
+## 17、 写一个clickoutside的自定义指令（代码）
+> [Demo17](Learning1-demo/demo17.html)
+
 ## 18、 写一个keep-alive的示例（代码）
 > [Demo18](https://codesandbox.io/s/veevalidate-components-element-ui-veevalidate-3-0-forked-i7p6xb?file=/src/App.vue)
 
 ## 19、 介绍nextTick、$set、$parent、$root、mixin的使用场景（口述）
+- nextTick
+  - 功能：在下一次DOM更新结束后执行其指定的回调
+  - 什么时候用：当改变数据后，要基于更新后的新DOM进行某些操作时，要在nextTick所指定的回调函数中执行
+
+- $set
+  - 功能：向响应式对象中添加一个 property，并确保这个新 property 同样是响应式的
+
+- $parent
+  - 功能：访问父实例
+
+- $root
+  - 功能：当前组件树的根 Vue 实例。如果当前实例没有父实例，此实例将会是其自己。
+
+- mixin
+  - 功能：可以把多个组件公用的配置提取为一个混入对象
+  - 混入规则：
+    - 数据对象以组件为主
+    - 生命周期钩子混入对象前置
 
 ## 20、写一个在线代码运行器(代码)
+> [Demo20](Learning1-demo/demo20.html)

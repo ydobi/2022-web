@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <textarea name="" id="content" cols="30" rows="30" autofocus placeholder="请输入vue模板"></textarea>
+        <button onclick="run()">运行</button>
+        <div id="app"></div>
+    </div>
+    <script src="../../js/vue.js"></script>
+    <script>
+        function getSource(type,content) {
+            const reg = new RegExp(`<${type}[^>]*>`);
+            let matches = content.match(reg);
+            if (matches) {
+                let start = content.indexOf(matches[0]) + matches[0].length;
+                let end = content.lastIndexOf(`</${type}`);
+                console.log(content.slice(start, end));
+                return content.slice(start, end)
+            }
+        }
+        function compiler(content) {
+            let template = getSource("template",content);
+            if (!template) return
+            let script = getSource("script",content);
+            if (script) {
+                script = script.replace(/export default/, "return");
+            }
+            let styleCss = getSource("style",content);
+            let style = document.createElement("style");
+            style.innerHTML = styleCss;
+            document.head.appendChild(style);
+            let obj = new Function(script)();
+            obj.template = template;
+            return obj
+        }
+        function run(){
+           const content =  document.getElementById('content').value
+           const options = compiler(content)
+           console.log(options)
+           const vm = new Vue(options)
+           vm.$mount('#app')
+        }
+    </script>
+</body>
+
+</html>
